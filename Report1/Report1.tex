@@ -1,0 +1,83 @@
+\documentclass[11pt, oneside]{jsarticle}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps則 with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex	
+								
+\usepackage{ascmac,amsmath,amssymb,mathtools,latexsym,amsthm}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\def\qed{\hfill $\Box$}
+
+%SetFonts
+
+%SetFonts
+
+
+%\makeatletter
+%\title{数理手法\@Roman{5}レポート問題}
+
+%\author{教養学部工学部電気電子工学科内定 540479C 山口龍太郎}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\makeatletter
+\begin{center}
+    \Large プログラミング基礎演習 レポート
+\end{center}
+\begin{flushright}
+    \normalsize 電気電子工学科内定 \\
+    \large 540479C 山口龍太郎
+\end{flushright}
+%\maketitle
+%\section{}
+%\subsection{}
+\section*{導入}
+%\begin{itembox}[l]{問}
+%    概収束および確率収束の例を挙げよ。
+%\end{itembox}
+
+%\subsubsection*{概収束}
+    乱数発生を利用して画像にノイズを付加する。
+
+    その後、ノイズが付加された画像からマルコフランダム場における決定的アルゴリズムの一種であるICM(iterated conditional modes)を用いてノイズ除去を行う。
+
+\section*{手法・結果}
+    課題1において、指定したファイルがASCIIテキストで書かれたpbmファイルかどうかをチェックし、そうであればその後にある行列数を取得し、第3引数に指定された確率で0と1をし出力する。
+
+    課題2において、指定したファイルをICMを用いてノイズ除去を行った。以下にその時用いた式を示す。ただし、$x_i$はノイズのない真の画像のピクセル値、$y_i$はノイズが付加された画像のピクセル値である。以下の式で表されるエネルギー関数が最小になるような$x_i$を選ぶことでノイズを除去する。
+
+    \begin{align*}
+    E(x, y) &= -\beta\sum_{i, j}(2x_i - 1)(2x_j - 1) - \eta\sum_i(2x_i - 1)(2y_i - 1)
+    \end{align*}
+
+    プログラム時の工夫として、エネルギー関数の第一項目の値を導くにあたり、energy\_func\_1においてtop, bottom, right, leftのフラグを立てて、$x_i$が上端のピクセル値であるならtopをゼロ、下端ならbottomをゼロ、右端ならrightをゼロ、左端ならleftをゼロにすることで、以下の表のようにピクセルの配置を考えることで1にはtopとleftを、2にはtopを、3にはtopとleftをかけるという操作を行うことで、コードの記述量を減らした。ただし、このコードの特徴として、周囲のピクセル値を使用するか如何にかかわることなくアクセスを行うというものがあるので、あらかじめピクセルを格納する配列の前後に余計に配列を確保しておく必要があった。
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|c|} \hline
+            1 & 2     & 3 \\     \hline
+            4 & $x_i$ & 5 \\     \hline
+            6 & 7     & 8 \\     \hline
+        \end{tabular}
+    \end{table}
+
+\section*{考察}
+    エネルギー関数の係数$\beta$と$\eta$はそれぞれ1と2とした。第一項目は周囲のピクセル値との差異が小さいほど小さくなり、第二項目はノイズ付加が行われたピクセル値との差異が小さいほど小さくなる。すなわち、$\beta$の値を$\eta$に対して大きくすれば元は塗りつぶされた領域であった場所に付加されたノイズは消すことができるがノイズ除去を行った画像のシャープさが失われる。一方で$\eta$を$\beta$に対して大きくすればシャープだが元は塗りつぶされた領域であった場所に付加されたノイズを除去できない。
+
+%TODO 画像の挿入
+
+    つまり、このアルゴリズムはノイズを、「周囲と異なる不規則なピクセルを生み出すもの」かつ「あまりたくさんは付加されていないもの」という2つの性質を持つものであることを前提にしている。反対に、ノイズののっていない元の画像が細かく複雑なものであった場合や、過度にノイズが付加されてしまった場合はこのアルゴリズムではいかに係数を操作したところで復元が十分に行われることはない。
+
+    今回、課題2で採用した方法ではエネルギー関数の第一項目の「隣のセル」を周囲8つのセルとし、係数の比($\frac{\eta}{\beta}$)は2とした。この条件でkadai01.cに基づくノイズを1割付加し、kadai02.cでノイズを除去したものの元の画像の一致率をdiff.cを用いて求めると、image1については95.18\%、image2については90.42\%だった。kadai02.cのコードのデファルトでは係数の比($\frac{\eta}{\beta}$)は2だが、引数で指定することができるようにしたので、これで改善を図りたい。
+
+    image1について、比を1.0にすると一致率は95.42\%、1.1から1.9については95.41\%、2.1から2.9については95.32\%、3.0から3.9では95.31\%、4.0では94.45\%となり、1.0から2.9までの値を取れば、2.0のときよりもわずかな改善が見られた。
+
+    image2について、比を1.0にすると一致率は90.53\%、1.1から1.9については90.58\%、2.1から2.9については90.56\%、3.0では89.34\%で1.0から2.9までの値を取れば、2.0のときよりもわずかな改善が見られた。
+
+    ただ、一致率はあくまで同じ箇所のピクセル値を比較したものである。実際、それぞれの係数比がデフォルト値のもの(noise\_reducted\_noised\_image1\_95.18.pbm, noise\_reducted\_noised\_image2\_90.42.pbm)を他のより一致率の高い画像と見比べて見ると、元の画像に近い画像として直感的に判断できるものはいずれも、係数比が大きいものであり、一致率が高くても係数比が2.0より小さいものはぼやけた画像だと感じる。これは、人が白い背景に対する黒い部分から画像を認識することによるものと言える。元のエネルギー関数の意味を考えると、係数比が大きいものは周囲との差異を馴らしていくようにノイズを除去する。これにより、白い背景と黒い対象物との境界がぼかされてしまうため、人は画像が鮮明でないと認識するのではないだろうか。
+
+    このように、画像をプログラムによって操作し、それを評価することは「人の認識」というものの性質を理解する必要があり、高度な判定が要求されることがわかった。
+%\section*{参考文献}
+\end{document}

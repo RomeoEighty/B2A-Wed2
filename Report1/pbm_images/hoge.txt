@@ -1,0 +1,115 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.012  000.012: --- VIM STARTING ---
+000.117  000.105: Allocated generic buffers
+003.592  003.475: locale set
+003.608  000.016: clipboard setup
+003.691  000.083: window checked
+020.800  017.109: inits 1
+020.807  000.007: parsing arguments
+020.808  000.001: expanding arguments
+024.289  003.481: shell init
+024.780  000.491: Termcap init
+024.796  000.016: inits 2
+024.920  000.124: init highlight
+038.662  000.230  000.230: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/dein.vim/autoload/dein.vim
+039.382  000.553  000.553: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/dein.vim/autoload/dein/util.vim
+040.059  000.265  000.265: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/dein.vim/autoload/dein/autoload.vim
+040.814  000.418  000.418: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/dein.vim/autoload/dein/types/git.vim
+041.169  000.885  000.467: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/dein.vim/autoload/dein/parse.vim
+068.232  000.115  000.115: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/vimshell.vim/ftdetect/vimshrc.vim
+068.548  000.176  000.176: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/ftdetect/ftdetect.vim
+068.694  020.657  020.366: sourcing /usr/local/share/vim/vim80/filetype.vim
+068.868  000.059  000.059: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/ftplugin.vim
+068.967  000.015  000.015: sourcing /usr/local/share/vim/vim80/ftplugin.vim
+069.120  000.038  000.038: sourcing /usr/local/share/vim/vim80/indent.vim
+070.505  000.818  000.818: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+070.619  001.058  000.240: sourcing /usr/local/share/vim/vim80/syntax/synload.vim
+070.650  001.215  000.157: sourcing /usr/local/share/vim/vim80/syntax/syntax.vim
+071.135  000.161  000.161: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+071.507  000.154  000.154: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+071.834  000.156  000.156: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+094.931  024.157  023.686: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/colors/jellybeans.vim
+095.600  070.414  022.340: sourcing $HOME/.vimrc
+095.611  000.277: sourcing vimrc file(s)
+095.944  000.076  000.076: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/vimproc.vim/plugin/vimproc.vim
+096.528  000.423  000.423: sourcing /Users/RomeoEighty/.vim/dein/repos/github.com/Shougo/vimshell.vim/plugin/vimshell.vim
+098.359  000.863  000.863: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/clang.vim
+098.517  000.054  000.054: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/colorswatch.vim
+098.947  000.182  000.182: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/ctrlsf/backend.vim
+102.987  004.394  004.212: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/ctrlsf.vim
+103.415  000.232  000.232: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/cursorword.vim
+106.807  003.308  003.308: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/fugitive.vim
+106.965  000.055  000.055: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/gundo.vim
+107.142  000.105  000.105: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/lightline.vim
+107.677  000.395  000.395: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/neocomplete/buffer.vim
+108.428  000.265  000.265: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/neocomplete/dictionary.vim
+108.848  000.154  000.154: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/neocomplete/member.vim
+109.120  000.114  000.114: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/neocomplete/tag.vim
+109.526  000.244  000.244: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/neocomplete.vim
+110.090  000.388  000.388: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/neosnippet.vim
+110.353  000.041  000.041: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/autoloclist.vim
+110.681  000.076  000.076: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/balloons.vim
+110.916  000.031  000.031: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/checker.vim
+111.130  000.031  000.031: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/cursor.vim
+111.314  000.036  000.036: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/highlighting.vim
+111.516  000.030  000.030: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/loclist.vim
+111.649  000.022  000.022: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/modemap.vim
+111.806  000.024  000.024: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/notifiers.vim
+111.923  000.027  000.027: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/registry.vim
+112.076  000.033  000.033: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/signs.vim
+113.389  000.797  000.797: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/syntastic/util.vim
+127.547  000.072  000.072: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/autoloclist.vim
+127.686  000.064  000.064: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/balloons.vim
+127.954  000.198  000.198: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/checker.vim
+128.130  000.103  000.103: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/cursor.vim
+128.287  000.086  000.086: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/highlighting.vim
+128.639  000.284  000.284: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/loclist.vim
+128.878  000.118  000.118: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/modemap.vim
+129.041  000.078  000.078: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/notifiers.vim
+129.524  000.414  000.414: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/registry.vim
+129.734  000.118  000.118: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic/signs.vim
+130.716  018.493  016.161: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/syntastic.vim
+131.505  000.499  000.499: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/unite/custom.vim
+131.620  000.825  000.326: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/unite/bookmark.vim
+131.904  000.164  000.164: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/unite/buffer.vim
+132.098  000.117  000.117: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/unite/window.vim
+132.368  000.194  000.194: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/plugin/unite.vim
+132.895  000.074  000.074: sourcing /usr/local/share/vim/vim80/plugin/getscriptPlugin.vim
+133.247  000.278  000.278: sourcing /usr/local/share/vim/vim80/plugin/gzip.vim
+133.557  000.240  000.240: sourcing /usr/local/share/vim/vim80/plugin/logiPat.vim
+133.647  000.017  000.017: sourcing /usr/local/share/vim/vim80/plugin/manpager.vim
+133.937  000.222  000.222: sourcing /usr/local/share/vim/vim80/plugin/matchparen.vim
+134.801  000.732  000.732: sourcing /usr/local/share/vim/vim80/plugin/netrwPlugin.vim
+134.943  000.024  000.024: sourcing /usr/local/share/vim/vim80/plugin/rrhelper.vim
+135.073  000.042  000.042: sourcing /usr/local/share/vim/vim80/plugin/spellfile.vim
+135.348  000.190  000.190: sourcing /usr/local/share/vim/vim80/plugin/tarPlugin.vim
+135.545  000.109  000.109: sourcing /usr/local/share/vim/vim80/plugin/tohtml.vim
+135.816  000.188  000.188: sourcing /usr/local/share/vim/vim80/plugin/vimballPlugin.vim
+136.143  000.235  000.235: sourcing /usr/local/share/vim/vim80/plugin/zipPlugin.vim
+136.174  006.998: loading plugins
+136.310  000.136: loading packages
+136.562  000.057  000.057: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/after/plugin/ctrlsf.vim
+136.570  000.203: loading after plugins
+136.583  000.013: inits 3
+141.698  005.115: reading viminfo
+141.743  000.045: setting raw mode
+141.750  000.007: start termcap
+143.507  001.757: clearing screen
+144.278  000.497  000.497: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/lightline.vim
+145.080  000.067  000.067: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/lightline/tab.vim
+145.723  000.214  000.214: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/lightline/colorscheme.vim
+146.308  001.029  000.815: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/lightline/colorscheme/wombat.vim
+151.104  000.231  000.231: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/syntastic/log.vim
+151.190  005.859: opening buffers
+151.396  000.074  000.074: sourcing /Users/RomeoEighty/.vim/dein/.cache/.vimrc/.dein/autoload/cursorword.vim
+151.759  000.495: BufEnter autocommands
+151.761  000.002: editing files in windows
+154.233  002.472: VimEnter autocommands
+154.237  000.004: before starting main loop
+156.146  001.909: first screen update
+156.148  000.002: --- VIM STARTED ---

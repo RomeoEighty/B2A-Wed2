@@ -1,0 +1,168 @@
+\documentclass[11pt, oneside]{jsarticle}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\usepackage{url}
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage[dvipdfmx]{graphicx}				% Use pdf, png, jpg, or eps則 with pdflatex; use eps in DVI mode
+                                    % TeX will automatically convert eps --> pdf in pdflatex	
+								
+\usepackage{ascmac,amsmath,amssymb,mathtools,latexsym,amsthm,listings}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\def\qed{\hfill $\Box$}
+
+%new command
+\newcommand{\Maru}[1]{\ooalign{
+\ifnum#1<10 \hfil\resizebox{.9\width}{.85\height}{#1}\hfil
+\else
+\hfil\resizebox{.6\width}{.8\height}{#1}\hfil
+\fi
+\crcr
+\raise.1ex\hbox{$\bigcirc$}}}
+%SetFonts
+
+%SetFonts
+
+
+%\makeatletter
+%\title{数理手法\@Roman{5}レポート問題}
+
+%\author{教養学部工学部電気電子工学科内定 540479C 山口龍太郎}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\makeatletter
+\begin{center}
+    \Large プログラム基礎演習レポート2016-2
+\end{center}
+\begin{flushright}
+    \normalsize 電気電子工学科内定 \\
+    \large 540479C 山口龍太郎
+\end{flushright}
+%\maketitle
+%\section{}
+%\subsection{}
+%\begin{itembox}[l]{問}
+%    陽電子を用いた計測において、2本の$\gamma$線が同時に放出されなかった場合にはどのような問題が生じるか。また$\gamma$線のエネルギーがそれぞれ異なっていた場合はどのような問題が生じうるか。
+%\end{itembox}
+
+\subsection*{導入}
+    初歩的な数式は単項演算子や二項演算子で構成されている。これは容易に木構造を用いてモデル化することができる。木構造は再帰関数などを用いれば容易に探索することができる。今回は関数形式で表式をパースし、木構造を構築し、木構造を利用して微分を行う。最終的にはニュートン法を利用することで与えられた関数の極値を求め、極地において関数が凸関数かどうかを判定する。
+
+\subsection*{手法・結果}
+\begin{description}
+    \item[課題1]\mbox{}\\
+        下記のような形式で表される表式を木構造にせよ。
+        \begin{center}
+            Plus[Times[Sin[13.4], 3], 2]\\
+        \end{center}
+    \item[課題2]\mbox{}\\
+        変数xに関する関数において、微分操作を行うプログラムを書け。
+    \item[課題3]\mbox{}\\
+        ニュートン法を用いて、与えられた関数の極値を計算するプログラムを書け。
+\end{description}
+
+\subsection*{課題1}
+    式を木構造にする際、ノードを以下のような形で定義した。このノードは数字や未知数x、関数を文字列で保持し、その性質をnodeType型として記憶する。また末端の情報は二つのbool型で保持する。hasXenosとhasValueという二つのフラグはこのノード以下に未知数xがあるか、数字を持つかをそれぞれ意味する。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+typedef enum {
+    Xenos              ,
+    Value              ,
+    OneArgumentFunction,
+    TwoArgumentFunction,
+} nodeType;
+
+typedef struct Node {
+    char     *str;
+    nodeType type;
+    bool     hasXenos;
+    bool     hasValue;
+    struct Node *lNode;
+    struct Node *rNode;
+} Node;
+\end{lstlisting}
+    nodeType型はデータ構造の種類に影響するノードの性質を決定する。この問では数字、未知数x、引数を1つだけ持つ関数(Exp[]、Sin[]など)、引数を2つ持つ関数(Times[]、Plus[]など)といったノードの種類が考えられる。また、関数の種類や数字の値の大きさといったより詳細な情報はnodeTypeに応じて、別の関数( double getDoubleValue(char *), twoArgumentsFunctionType getTwoArgumentsFunctionType(char *str) など)を用いて取り出す。
+
+    また、構造がわかりやすいようにvoid printAllNodesInList(Node *)関数を実行すると深さ優先でノードを再帰的にリスト化して表示する関数を作った。このリストではノードに格納された文字列、そのnodeType、フラグ、左右のノードの文字列を表示する。main.cではいくつかの式をそれぞれ木構造化し、リスト表示している。
+
+\subsection*{課題2}
+    合成関数の微分は以下のようになる。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+Plus[A, B]     -> Plus[A', B']
+Times[A, B]    -> Plus[Times[A', B], Times[A, B']]
+Subtract[A, B] -> Subtract[A', B']
+Divide[A, B]   -> Divide[Subtract[Times[A', B], Times[A, B']], Power[B, 2]]
+Power[A, B]    -> Times[Plus[Times[B', Log[A]], Times[Divide[B, A], A']], Power[A, B]]
+
+Sin[A] -> Times[Cos[A], A']
+Cos[A] -> Times[-1, Times[Sin[A], A']]
+Exp[A] -> Times[Exp[A], A']
+Log[A] -> Divide[A', A]
+\end{lstlisting}
+
+    上記のように合成関数の中には引数の関数を微分することなく利用するものがあるが、これらはポインタの差し替えだけで行うとその後の変化が複数の箇所で行われてしまうので、複製を行うことに気をつけなければならない。
+
+    二つのフラグは微分などの演算に利用する。未知数xを持つか持たないかは微分の結果に大きく影響する。xを持つかどうかがわからないとき全ての関数は合成関数として構成されていると判断する必要がある。しかし、上記のように多くの合成関数は微分を行うにつれてその木構造が大型化する。木構造が大型化するとメモリの使用量が増えるとともに、演算が遅くなってゆくため、木構造を小型化しなければならない。
+
+    木構造を小型化するにはいくつかの方法がある。数値のみを持つ木構造を一つの値ノードにまとめる手法(\Maru{1})、特殊な値を引数に持つ二引数関数をまとめる手法(\Maru{2})、複数の関数を別の関数を用いることでまとめる手法(\Maru{3})などが考えられる。
+
+    手法\Maru{2}は以下のようなものである。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+Plus[A, 0]     -> A
+Plus[0, A]     -> A
+Times[A, 0]    -> 0
+Times[0, A]    -> 0
+Divide[0, A]   -> 0
+Subtract[A, 0] -> A
+Subtract[0, A] -> Times[-1, A]
+Power[A, 0]    -> A
+Power[0, A]    -> 0
+
+Times[A, 1]    -> A
+Times[1, A]    -> A
+Divide[A, 1]   -> A
+Power[A, 1]    -> A
+\end{lstlisting}
+
+    手法\Maru{3}は以下のようなものである。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+Times[A, Times[A, ... A]]...] -> Power[A, n]
+Plus[A, Plus[A, ... A]]...]   -> Times[A, n]
+Times[Power[x, n], x]         -> Power[x, n+1]
+Divide[Power[x, n], x]        -> Power[x, n-1]
+\end{lstlisting}
+
+    但し、手法\Maru{3}は全てを網羅してはいない。
+
+    これらの手法のうち\Maru{1}と\Maru{2}をNode *summerizeValue(Node *node)として関数にしている。
+
+    微分を行うときは上記の単純化を施したのち、微分を行い、再度単純化をした根ノードを返すNode *differentiateFormulaWithX(Node *node)を作った。
+
+    main.cではいくつかの式の微分を実行した。
+
+\subsection*{課題3}
+
+    ニュートン法を用いることで、一回微分が0になる値を得られる。この値における二階微分の値が正ならば下に凸であるということがわかる。
+
+    main.cには問において例として示された式において、正しい答えが得られることを確かめた後に、入力した関数、初期値にしたがって同様の処理ができるようなコードが書かれている。
+
+%   \begin{figure}[h]
+%       \centering
+%       \includegraphics[width=13cm]{Report101216_figures.pdf}
+%       \caption{$\gamma$線の放出角度が$\theta$である時の線源が存在しうる線領域}
+%   \end{figure}
+     
+%    \begin{align*}
+%        m &= 9.11 \times 10 ^ {-31} \mathrm{[kg]} \\
+%        c &= 3.00 \times 10 ^ {8} \mathrm{[m/s]} \\
+%        1 \mathrm{[ev]} &= 0.1602 \times 10 ^{-18} \mathrm{[kg \cdot m^2/s^2]} \\
+%        E &= m  c ^ 2 \\
+%          &= 511 \mathrm{[keV]}
+%    \end{align*}
+\subsection*{手法・結果}
+    C言語は仕様が小さく処理に多くのコードを要する。今回の課題の処理には1500行近くのコードを要した。また、C言語はメモリに対する保護が弱く、プログラマは慎重にコーディングすることが求められる。今回のように記述量が多くなるとミスが起こりやすくなる。そのため、列挙型を使用することでコンパイラに不正な値の代入の警告を行わせることや、処理を関数化することで同じような処理でミスをしてしまうことを防ぐ工夫が必要であった。また、C言語はライブラリが与える関数がエラー処理をプログラマに求めているものが多く、これも関数化が求められる理由となる。このように関数の数が増加するとそれぞれの関数の役割を忘れることも多くなるので、関数や引数の命名は目的に沿ったものとなるようにすることを心がけた。
+     
+\begin{thebibliography}{9}
+    %\bibitem{micron}株式会社マイクロン - PETの活用 \url{http://www.micron-kobe.com/reference/use.html}
+\end{thebibliography}
+\end{document}
